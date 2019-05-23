@@ -41,7 +41,7 @@ export default {
       },
       set(newFilters) {
         this.$store.commit('FILTERS_UPDATED', newFilters);
-        this.$emit('update:canApplyFilters', this.term && this.term.length > 0);
+        this.$emit('update:canApplyFilters', (Boolean)(this.term && this.term.length > 0));
       },
     },
   },

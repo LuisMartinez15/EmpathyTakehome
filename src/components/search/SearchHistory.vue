@@ -26,8 +26,10 @@ export default {
   },
   methods: {
     searchAgain(index) {
-      this.$store.commit('FILTERS_UPDATED', this.searchHistory[index].filters);
-      this.$store.dispatch('search', this.searchHistory[index].term);
+      const { term, filters } = this.searchHistory[index];
+      this.$store.commit('REMOVE_SEARCH_HISTORY_ENTRY', index);
+      this.$store.commit('FILTERS_UPDATED', filters);
+      this.$store.dispatch('search', term);
     },
     removeEntry(index) {
       this.$store.commit('REMOVE_SEARCH_HISTORY_ENTRY', index);

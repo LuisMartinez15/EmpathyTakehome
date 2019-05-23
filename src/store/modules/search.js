@@ -56,8 +56,11 @@ const mutations = {
 const getters = {
   term: state => state.term,
   filters: state => state.filters,
-  results: state => state.results,
   searchHistory: state => state.searchHistory,
+  results: state => state.results,
+  emptyResults: state => (Object.keys(state.results)
+    .filter(key => (state.results[key].total > 0)).length <= 0),
+  tracks: state => state.results.tracks || {},
 };
 
 export default {
