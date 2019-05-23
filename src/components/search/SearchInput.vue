@@ -11,8 +11,14 @@ export default {
   name: 'search-input',
   data() {
     return {
-      delay: 500, // 0.5 seconds
+      delay: 500, // 0.5 seconds,
     };
+  },
+  props: {
+    canApplyFilters: {
+      trype: Boolean,
+      required: true,
+    },
   },
   computed: {
     term: {
@@ -20,6 +26,7 @@ export default {
         return this.$store.state.search.term;
       },
       set(newTerm) {
+        this.$emit('update:canApplyFilters', false);
         if (this.term === newTerm) return;
 
         if (newTerm) {

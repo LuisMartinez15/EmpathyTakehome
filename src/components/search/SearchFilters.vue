@@ -16,7 +16,7 @@
     <input @click="preventEmptyFilters" type="checkbox" id="album" value="album" v-model="filters">
 
     <div>Filters: {{ filters }}</div>
-    <button v-if="state.filtersUpdated" @click="applyFilters" type="button">Apply Filters</button>
+    <button v-if="canApplyFilters" @click="applyFilters" type="button">Apply Filters</button>
   </div>
 </template>
 
@@ -25,12 +25,11 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'search-filters',
-  data() {
-    return {
-      state: {
-        filtersUpdated: false,
-      },
-    };
+  props: {
+    canApplyFilters: {
+      type: Boolean,
+      required: true,
+    },
   },
   computed: {
     ...mapGetters({
@@ -42,7 +41,7 @@ export default {
       },
       set(newFilters) {
         this.$store.commit('FILTERS_UPDATED', newFilters);
-        this.state.filtersUpdated = this.term && this.term.length > 0;
+        this.$emit('update:canApplyFilters', this.term && this.term.length > 0);
       },
     },
   },
@@ -53,8 +52,8 @@ export default {
       }
     },
     applyFilters() {
-      if (this.state.filtersUpdated) {
-        this.state.filtersUpdated = false;
+      if (this.canApplyFilters) {
+        this.$emit('update:canApplyFilters', false);
         this.$store.dispatch('search');
       }
     },

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <search-input/>
-    <search-filters/>
+    <search-input :canApplyFilters.sync="state.canApplyFilters"/>
+    <search-filters :canApplyFilters.sync="state.canApplyFilters"/>
   </div>
 </template>
 
@@ -11,6 +11,13 @@ import SearchFilters from '@/components/search/SearchFilters.vue';
 
 export default {
   name: 'search-panel',
+  data() {
+    return {
+      state: {
+        canApplyFilters: false,
+      },
+    };
+  },
   components: {
     'search-input': SearchInput,
     'search-filters': SearchFilters,
