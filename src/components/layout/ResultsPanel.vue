@@ -6,6 +6,7 @@
     </div>
     <div v-else-if="results && !emptyResults">
       <tracks-list v-if="results.tracks && results.tracks.total > 0"/>
+      <artists-list v-if="results.artists && results.artists.total > 0"/>
       <albums-list v-if="results.albums && results.albums.total > 0"/>
     </div>
     <div v-else>
@@ -22,13 +23,15 @@
 import { mapGetters } from 'vuex';
 
 import AlbumsList from '@/components/search/results/albums/AlbumsList.vue';
+import ArtistsList from '@/components/search/results/artists/ArtistsList.vue';
 import TracksList from '@/components/search/results/tracks/TracksList.vue';
 
 export default {
   name: 'results-panel',
   components: {
-    'tracks-list': TracksList,
     'albums-list': AlbumsList,
+    'artists-list': ArtistsList,
+    'tracks-list': TracksList,
   },
   computed: {
     ...mapGetters({

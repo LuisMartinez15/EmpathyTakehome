@@ -60,8 +60,9 @@ const getters = {
   results: state => state.results,
   emptyResults: state => (Object.keys(state.results)
     .filter(key => (state.results[key].total > 0)).length <= 0),
-  tracks: state => state.results.tracks || {},
   albums: state => state.results.albums || {},
+  artists: state => state.results.artists || {},
+  tracks: state => state.results.tracks || {},
 };
 
 export default {
