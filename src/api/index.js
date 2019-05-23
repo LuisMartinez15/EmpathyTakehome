@@ -4,6 +4,9 @@ import store from '@/store';
 
 const Spotify = axios.create({
   baseURL: 'https://api.spotify.com/v1',
+  headers: {
+    Authorization: `Bearer ${window.localStorage.getItem('accessToken')}`,
+  },
 });
 
 Spotify.interceptors.response.use(
@@ -17,4 +20,4 @@ Spotify.interceptors.response.use(
   },
 );
 
-export { Spotify };
+export default Spotify;

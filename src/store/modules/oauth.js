@@ -8,9 +8,9 @@ const actions = {
   getSpotifyToken: () => {
     const baseURL = 'https://accounts.spotify.com/authorize';
     const clientId = encodeURIComponent('f1bccbbbce684c9eb31fcc66fbfcf802');
-    const redirectUri = encodeURIComponent(`${window.location.href}callback`);
+    const redirectUri = encodeURIComponent(`${window.location.origin}/callback`);
     const state = encodeURIComponent((new Date().getTime()).toString(16));
-    const query = `?response_type=token&client_id=${clientId}&redirect_uri=${redirectUri}&state=${state}`;
+    const query = `?response_type=token&client_id=${clientId}&redirect_uri=${redirectUri}&state=${state}&scope=user-read-private`;
 
     window.localStorage.setItem('oauthState', state);
     window.location = `${baseURL}${query}`;

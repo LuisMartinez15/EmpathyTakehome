@@ -8,6 +8,8 @@ import SearchView from './views/SearchView.vue';
 
 Vue.use(Router);
 
+const appStore = store;
+
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -16,6 +18,13 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home,
+      beforeEnter: (to, from, next) => {
+        if (appStore.getters.isAuthorized) {
+          next('search');
+        } else {
+          next('/');
+        }
+      },
     },
     {
       path: '/callback',
@@ -27,8 +36,7 @@ export default new Router({
       name: 'search-view',
       component: SearchView,
       beforeEnter: (to, from, next) => {
-        const myStore = store;
-        if (myStore.getters.isAuthorized) {
+        if (appStore.getters.isAuthorized) {
           next();
         } else {
           next('/');
