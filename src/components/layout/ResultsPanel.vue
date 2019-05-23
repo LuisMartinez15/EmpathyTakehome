@@ -5,9 +5,10 @@
       <span>Find your favorite artists, tracks and albums.</span>
     </div>
     <div v-else-if="results && !emptyResults">
-      <tracks-list v-if="results.tracks && results.tracks.total > 0"/>
-      <artists-list v-if="results.artists && results.artists.total > 0"/>
-      <albums-list v-if="results.albums && results.albums.total > 0"/>
+      <search-nav/>
+      <slot name="tracks"></slot>
+      <slot name="artists"></slot>
+      <slot name="albums"></slot>
     </div>
     <div v-else>
       <h2>No results found for "{{ term }}"</h2>
@@ -22,16 +23,13 @@
 <script>
 import { mapGetters } from 'vuex';
 
-import AlbumsList from '@/components/search/results/albums/AlbumsList.vue';
-import ArtistsList from '@/components/search/results/artists/ArtistsList.vue';
-import TracksList from '@/components/search/results/tracks/TracksList.vue';
+import SearchNavBar from '@/components/search/SearchNavBar.vue';
+
 
 export default {
   name: 'results-panel',
   components: {
-    'albums-list': AlbumsList,
-    'artists-list': ArtistsList,
-    'tracks-list': TracksList,
+    'search-nav': SearchNavBar,
   },
   computed: {
     ...mapGetters({
