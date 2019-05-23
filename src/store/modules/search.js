@@ -3,14 +3,18 @@ import Spotify from '@/api';
 
 const defaultState = {
   term: '',
+  filters: [
+    'track',
+  ],
   results: {},
 };
 
 const actions = {
   search: async (context, payload) => {
-    const term = encodeURIComponent(payload) || encodeURIComponent(context.state.term);
+    const term = payload || context.state.term;
+    const { filters } = context.state;
 
-    const query = `q=${term}&type=track,album,artist&market=from_token&limit=10`;
+    const query = `q=${encodeURIComponent(term)}&type=${encodeURIComponent(filters.join(','))}&market=from_token&limit=10`;
     try {
       const { data } = await Spotify.get(`/search?${query}`);
       context.commit('RESULTS_FETCHED', { data, term });
@@ -26,6 +30,10 @@ const mutations = {
     state.term = '';
   },
 
+  FILTERS_UPDATED: (state, payload) => {
+    state.filters = [...payload];
+  },
+
   RESULTS_FETCHED: (state, payload) => {
     state.term = payload.term;
     state.results = payload.data;
@@ -39,6 +47,7 @@ const mutations = {
 
 const getters = {
   term: state => state.term,
+  filters: state => state.filters,
   results: state => state.results,
 };
 
