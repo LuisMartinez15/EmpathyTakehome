@@ -3,10 +3,9 @@ import Spotify from '@/api';
 
 const defaultState = {
   term: '',
-  filters: [
-    'track',
-  ],
+  filters: ['track'],
   results: {},
+  searchHistory: [],
 };
 
 const actions = {
@@ -17,7 +16,7 @@ const actions = {
     const query = `q=${encodeURIComponent(term)}&type=${encodeURIComponent(filters.join(','))}&market=from_token&limit=10`;
     try {
       const { data } = await Spotify.get(`/search?${query}`);
-      context.commit('RESULTS_FETCHED', { data, term });
+      context.commit('RESULTS_FETCHED', { data, entry: { term, filters } });
     } catch (error) {
       context.commit('RESULTS_FAILED');
     }
@@ -35,12 +34,21 @@ const mutations = {
   },
 
   RESULTS_FETCHED: (state, payload) => {
-    state.term = payload.term;
+    state.term = payload.entry.term;
     state.results = payload.data;
+    state.searchHistory = [payload.entry, ...state.searchHistory];
   },
 
   RESULTS_FAILED: (state) => {
     state.results = [];
+  },
+
+  REMOVE_SEARCH_HISTORY_ENTRY: (state, index) => {
+    state.searchHistory.splice(index, 1);
+  },
+
+  CLEAR_SEARCH_HISTORY: (state) => {
+    state.searchHistory = [];
   },
 };
 /* eslint-enable */
@@ -49,6 +57,7 @@ const getters = {
   term: state => state.term,
   filters: state => state.filters,
   results: state => state.results,
+  searchHistory: state => state.searchHistory,
 };
 
 export default {
