@@ -4,7 +4,7 @@ import store from './store';
 
 import Home from './views/Home.vue';
 import SpotifyOAuth from './views/SpotifyOAuth.vue';
-import SearchView from './views/SearchView.vue';
+import SearchView from './views/search/SearchView.vue';
 
 Vue.use(Router);
 
