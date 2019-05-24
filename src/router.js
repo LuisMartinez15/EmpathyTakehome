@@ -4,6 +4,7 @@ import store from './store';
 
 import Home from './views/Home.vue';
 import SpotifyOAuth from './views/SpotifyOAuth.vue';
+import TracksView from './views/search/TracksView.vue';
 import SearchView from './views/search/SearchView.vue';
 
 Vue.use(Router);
@@ -20,7 +21,7 @@ export default new Router({
       component: Home,
       beforeEnter: (to, from, next) => {
         if (appStore.getters.isAuthorized) {
-          next('search');
+          next('/search');
         } else {
           next('/');
         }
@@ -35,6 +36,18 @@ export default new Router({
       path: '/search',
       name: 'search-view',
       component: SearchView,
+      beforeEnter: (to, from, next) => {
+        if (appStore.getters.isAuthorized) {
+          next();
+        } else {
+          next('/');
+        }
+      },
+    },
+    {
+      path: '/search/songs/:term',
+      name: 'tracks-view',
+      component: TracksView,
       beforeEnter: (to, from, next) => {
         if (appStore.getters.isAuthorized) {
           next();
