@@ -49,7 +49,7 @@ export default new Router({
       name: 'tracks-view',
       component: TracksView,
       beforeEnter: (to, from, next) => {
-        if (appStore.getters.isAuthorized) {
+        if (appStore.getters.isAuthorized && appStore.getters.term) {
           next();
         } else {
           next('/');
