@@ -1,5 +1,6 @@
 // eslint-disable-next-line
 import Spotify from '@/api';
+import { getQueryString, getUrlParameter } from '@/utils';
 
 const defaultState = {
   term: '',
@@ -13,20 +14,34 @@ const actions = {
     const term = payload || context.state.term;
     const { filters } = context.state;
 
-    const query = `q=${encodeURIComponent(term)}&type=${encodeURIComponent(filters.join(','))}&market=from_token&limit=10`;
+    const query = `q=${encodeURIComponent(term)}&type=${encodeURIComponent(filters.join(','))}&market=from_token&limit=50`;
     try {
       const { data } = await Spotify.get(`/search?${query}`);
-      context.commit('RESULTS_FETCHED', { data, entry: { term, filters } });
+      context.commit('TERM_UPDATED', term);
+      context.commit('ADD_SEARCH_HISTORY_ENTRY', { term, filters });
+      context.commit('RESULTS_FETCHED', data);
     } catch (error) {
       context.commit('RESULTS_FAILED');
+    }
+  },
+  getMoreItems: async (context, payload) => {
+    const query = getQueryString(payload);
+    const type = `${getUrlParameter('type', query)}s`;
+    const mutation = `GET_MORE_${type.toUpperCase()}`;
+
+    try {
+      const { data } = await Spotify.get(`/search?${query}`);
+      context.commit(mutation, data[type]);
+    } catch (error) {
+      // context.commit(`${mutation}_FAILED`);
     }
   },
 };
 
 /* eslint-disable */
 const mutations = {
-  EMPTY_TERM: (state) => {
-    state.term = '';
+  TERM_UPDATED: (state, payload) => {
+    state.term = payload;
   },
 
   FILTERS_UPDATED: (state, payload) => {
@@ -34,13 +49,25 @@ const mutations = {
   },
 
   RESULTS_FETCHED: (state, payload) => {
-    state.term = payload.entry.term;
-    state.results = payload.data;
-    state.searchHistory = [payload.entry, ...state.searchHistory];
+    state.results = payload;
   },
 
   RESULTS_FAILED: (state) => {
     state.results = [];
+  },
+
+  GET_MORE_TRACKS: (state, payload) => {
+    const oldItems = state.results.tracks.items;
+    state.results.tracks = payload;
+    state.results.tracks.items = [...new Set([...oldItems, ...state.results.tracks.items])];
+  },
+
+  GET_MORE_ALBUMS: (state, payload) => {
+    state.results.albums = payload;
+  },
+
+  ADD_SEARCH_HISTORY_ENTRY: (state, payload) => {
+    state.searchHistory = [payload, ...state.searchHistory];
   },
 
   REMOVE_SEARCH_HISTORY_ENTRY: (state, index) => {

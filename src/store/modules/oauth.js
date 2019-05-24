@@ -1,4 +1,4 @@
-import getUrlParameter from '@/utils';
+import { getUrlParameter } from '@/utils';
 
 const defaultState = {
   token: window.localStorage.getItem('accessToken') || '',
@@ -17,11 +17,11 @@ const actions = {
   },
   storeToken: (context) => {
     const oauthState = window.localStorage.getItem('oauthState');
-    const requestState = getUrlParameter('state', '#');
-    const errorParam = getUrlParameter('error', '?');
+    const requestState = getUrlParameter('state', window.location.hash);
+    const errorParam = getUrlParameter('error', window.location.href);
 
     if (oauthState === requestState && !errorParam) {
-      const accessToken = getUrlParameter('access_token', '#');
+      const accessToken = getUrlParameter('access_token', window.location.hash);
       window.localStorage.setItem('accessToken', accessToken);
       context.commit('OAUTH_TOKEN_SAVED', accessToken);
     } else {

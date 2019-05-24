@@ -32,7 +32,7 @@ export default {
         if (newTerm) {
           this.$store.dispatch('search', newTerm);
         } else {
-          this.$store.commit('EMPTY_TERM');
+          this.$store.commit('TERM_UPDATED', '');
         }
       },
     },
