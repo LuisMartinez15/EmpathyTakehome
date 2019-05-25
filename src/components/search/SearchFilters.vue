@@ -54,7 +54,11 @@ export default {
     applyFilters() {
       if (this.canApplyFilters) {
         this.$emit('update:canApplyFilters', false);
-        this.$store.dispatch('search');
+        this.$store.dispatch('search').then(() => {
+          if (this.$route.name !== 'search-results') {
+            this.$router.push(`/search/results/${encodeURIComponent(this.term)}`);
+          }
+        });
       }
     },
   },

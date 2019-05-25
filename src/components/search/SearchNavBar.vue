@@ -1,14 +1,14 @@
 <template>
   <nav>
     <ul>
-      <router-link tag="li" :to="{ path: '/search' }">
+      <router-link tag="li" :to="{ path: `/search/results/${encodeURIComponent(term)}` }">
         <a>TOP RESULTS</a>
       </router-link>
       <router-link
         tag="li"
         v-for="section in filteredSections"
         :key="section.filterName"
-        :to="{ path: `/search/${section.prettyName}/${term}` }"
+        :to="{ path: `/search/${section.prettyName}/${encodeURIComponent(term)}` }"
       >
         <a>{{ section.prettyName.toUpperCase() }}</a>
       </router-link>

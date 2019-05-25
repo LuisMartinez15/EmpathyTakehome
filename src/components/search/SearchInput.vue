@@ -30,9 +30,14 @@ export default {
         if (this.term === newTerm) return;
 
         if (newTerm) {
-          this.$store.dispatch('search', newTerm);
+          this.$store.dispatch('search', newTerm).then(() => {
+            if (this.$route.name !== 'search-results') {
+              this.$router.push(`/search/results/${encodeURIComponent(this.term)}`);
+            }
+          });
         } else {
           this.$store.commit('TERM_UPDATED', '');
+          this.$router.push('/search');
         }
       },
     },
