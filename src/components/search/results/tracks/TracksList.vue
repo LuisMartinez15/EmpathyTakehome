@@ -2,7 +2,7 @@
   <div>
     <h2>TRACKS</h2>
     <ul>
-      <track-item v-for="track in tracks.items" :key="track.id" :track="track"/>
+      <track-item v-for="track in trackItems" :key="track.id" :track="track"/>
     </ul>
   </div>
 </template>
@@ -17,10 +17,19 @@ export default {
   components: {
     'track-item': TrackItem,
   },
+  props: {
+    amount: {
+      type: Number,
+      required: false,
+    },
+  },
   computed: {
     ...mapGetters({
       tracks: 'tracks',
     }),
+    trackItems() {
+      return this.amount ? this.tracks.items.slice(0, this.amount) : this.tracks.items;
+    },
   },
 };
 </script>

@@ -5,13 +5,13 @@
       <search-panel/>
       <results-panel>
         <template v-slot:tracks>
-          <tracks-list v-if="tracks && tracks.total > 0"/>
+          <tracks-list v-if="tracks && tracks.total > 0" :amount="tracksAmount"/>
         </template>
         <template v-slot:artists>
-          <artists-list v-if="artists && artists.total > 0"/>
+          <artists-list v-if="artists && artists.total > 0" :amount="artistsAmount"/>
         </template>
         <template v-slot:albums>
-          <albums-list v-if="albums && albums.total > 0"/>
+          <albums-list v-if="albums && albums.total > 0" :amount="albumsAmount"/>
         </template>
       </results-panel>
     </div>
@@ -38,6 +38,13 @@ export default {
     'tracks-list': TracksList,
     'artists-list': ArtistsList,
     'albums-list': AlbumsList,
+  },
+  data() {
+    return {
+      tracksAmount: 5,
+      artistsAmount: 12,
+      albumsAmount: 12,
+    };
   },
   computed: {
     ...mapGetters({

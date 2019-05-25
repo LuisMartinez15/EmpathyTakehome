@@ -14,7 +14,7 @@ const actions = {
     const term = payload || context.state.term;
     const { filters } = context.state;
 
-    const query = `q=${encodeURIComponent(term)}&type=${encodeURIComponent(filters.join(','))}&market=from_token&limit=10`;
+    const query = `q=${encodeURIComponent(term)}&type=${encodeURIComponent(filters.join(','))}&market=from_token&limit=20`;
     try {
       const { data } = await Spotify.get(`/search?${query}`);
       context.commit('TERM_UPDATED', term);
