@@ -34,7 +34,7 @@ export default {
     return {
       delay: 250,
       bottomOffset: 300,
-      end: false,
+      fetchedAll: false,
     };
   },
   computed: {
@@ -52,13 +52,13 @@ export default {
         >= (docElement.offsetHeight - this.bottomOffset);
 
       if (bottomOfWindow && (this.tracks.offset + this.tracks.limit) <= this.tracks.total) {
-        this.end = this.tracks.offset + this.tracks.limit >= this.tracks.total;
+        this.fetchedAll = this.tracks.offset + this.tracks.limit >= this.tracks.total;
         this.$store.dispatch('getMoreItems', this.tracks.next);
       }
     },
   },
   watch: {
-    end() {
+    fetchedAll() {
       window.removeEventListener('scroll', this.infiniteScrolling);
     },
   },
