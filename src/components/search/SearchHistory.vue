@@ -29,7 +29,11 @@ export default {
       const { term, filters } = this.searchHistory[index];
       this.$store.commit('REMOVE_SEARCH_HISTORY_ENTRY', index);
       this.$store.commit('FILTERS_UPDATED', filters);
-      this.$store.dispatch('search', term);
+      this.$store.dispatch('search', term).then(() => {
+        if (this.$route.name !== 'search-results') {
+          this.$router.push(`/search/results/${encodeURIComponent(this.term)}`);
+        }
+      });
     },
     removeEntry(index) {
       this.$store.commit('REMOVE_SEARCH_HISTORY_ENTRY', index);
