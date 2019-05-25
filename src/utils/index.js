@@ -33,3 +33,11 @@ export const updateCollection = (state, type, payload) => {
 
   return newState;
 };
+
+export const searchRedirect = (store, next) => {
+  if (store.getters.isAuthorized && store.getters.term) {
+    return next();
+  }
+
+  return next('/');
+};
