@@ -14,7 +14,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { debounce } from '@/utils';
+import { debounce, getMoreItems } from '@/utils';
 
 import AsidePanel from '@/components/layout/AsidePanel.vue';
 import SearchPanel from '@/components/layout/SearchPanel.vue';
@@ -34,39 +34,32 @@ export default {
     return {
       delay: 250,
       bottomOffset: 300,
-      fetchedAll: false,
+      state: {
+        fetchedAll: false,
+      },
     };
   },
   computed: {
     ...mapGetters({
-      isAuthorized: 'isAuthorized',
       tracks: 'tracks',
     }),
   },
   methods: {
     infiniteScrolling() {
-      // if (window.innerHeight + window.scrollY >= (document.body.offsetHeight - this.trigger)) {
-      //   if (this.state.offset + this.state.limit <= this.tracks.total) {
-      const docElement = document.documentElement;
-      const bottomOfWindow = docElement.scrollTop + window.innerHeight
-        >= (docElement.offsetHeight - this.bottomOffset);
-
-      if (bottomOfWindow && (this.tracks.offset + this.tracks.limit) <= this.tracks.total) {
-        this.fetchedAll = this.tracks.offset + this.tracks.limit >= this.tracks.total;
-        this.$store.dispatch('getMoreItems', this.tracks.next);
-      }
+      getMoreItems(this, 'tracks');
     },
   },
   watch: {
-    fetchedAll() {
-      window.removeEventListener('scroll', this.infiniteScrolling);
+    'state.fetchedAll': function removeScrollListener() {
+      window.removeEventListener('scroll', this.debounceInfiniteScrolling);
     },
   },
   created() {
-    window.addEventListener('scroll', debounce(this.infiniteScrolling, this.delay));
+    this.debounceInfiniteScrolling = debounce(this.infiniteScrolling, this.delay);
+    window.addEventListener('scroll', this.debounceInfiniteScrolling);
   },
   destroyed() {
-    window.removeEventListener('scroll', this.infiniteScrolling);
+    window.removeEventListener('scroll', this.debounceInfiniteScrolling);
   },
 };
 </script>

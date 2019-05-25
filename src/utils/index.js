@@ -25,11 +25,12 @@ export const getQueryString = url => (url.split('?')[1] || '');
 
 export const updateCollection = (state, type, payload) => {
   const newState = state;
-  const previousItems = newState.results.artists.items;
+  const previousItems = newState.results[type].items;
   newState.results[type] = payload;
   newState.results[type].items = [
     ...new Set([...previousItems, ...newState.results[type].items]),
   ];
+  newState.results[type].offeset = newState.results[type].items.length;
 
   return newState;
 };
@@ -40,4 +41,22 @@ export const searchRedirect = (store, next) => {
   }
 
   return next('/');
+};
+
+/* eslint no-param-reassign:
+  [
+    "error",
+    { "props": true, "ignorePropertyModificationsFor": ["component"] }
+] */
+export const getMoreItems = (component, type) => {
+  const docElement = document.documentElement;
+  const bottomOfWindow = docElement.scrollTop + window.innerHeight
+    >= (docElement.offsetHeight - component.bottomOffset);
+
+  if (bottomOfWindow
+    && component[type].next) {
+    component.state.fetchedAll = getUrlParameter('offset', component[type].next) + component[type].limit
+      >= component[type].total;
+    component.$store.dispatch('getMoreItems', component[type].next);
+  }
 };
