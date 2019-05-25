@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import Spotify from '@/api';
-import { getQueryString, getUrlParameter } from '@/utils';
+import { getQueryString, getUrlParameter, updateCollection } from '@/utils';
 
 const defaultState = {
   term: '',
@@ -57,15 +57,15 @@ const mutations = {
   },
 
   GET_MORE_TRACKS: (state, payload) => {
-    const previousTracks = state.results.tracks.items;
-    state.results.tracks = payload;
-    state.results.tracks.items = [...new Set([...previousTracks, ...state.results.tracks.items])];
+    state = updateCollection(state, 'tracks', payload);
   },
 
   GET_MORE_ARTISTS: (state, payload) => {
-    const previousArtists = state.results.artists.items;
-    state.results.artists = payload;
-    state.results.artists.items = [...new Set([...previousArtists, ...state.results.artists.items])];
+    state = updateCollection(state, 'artists', payload);
+  },
+
+  GET_MORE_ALBUMS: (state, payload) => {
+    state = updateCollection(state, 'albums', payload);
   },
 
   ADD_SEARCH_HISTORY_ENTRY: (state, payload) => {

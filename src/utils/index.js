@@ -7,7 +7,7 @@ export const getUrlParameter = (name, source) => {
 };
 
 /* eslint-disable */
-export function debounce(fn, delay) {
+export const debounce = (fn, delay) => {
   var timeoutID = null;
 
   return function () {
@@ -22,3 +22,14 @@ export function debounce(fn, delay) {
 /* eslint-enable */
 
 export const getQueryString = url => (url.split('?')[1] || '');
+
+export const updateCollection = (state, type, payload) => {
+  const newState = state;
+  const previousItems = newState.results.artists.items;
+  newState.results[type] = payload;
+  newState.results[type].items = [
+    ...new Set([...previousItems, ...newState.results[type].items]),
+  ];
+
+  return newState;
+};

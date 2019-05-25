@@ -7,6 +7,7 @@ import SpotifyOAuth from './views/SpotifyOAuth.vue';
 import TracksView from './views/search/TracksView.vue';
 import SearchView from './views/search/SearchView.vue';
 import ArtistsView from './views/search/ArtistsView.vue';
+import AlbumsView from './views/search/AlbumsView.vue';
 
 Vue.use(Router);
 
@@ -63,6 +64,13 @@ export default new Router({
       path: '/search/artists/:term',
       name: 'artists-view',
       component: ArtistsView,
+      beforeEnter: (to, from, next) => (searchRedirect(next)),
+    },
+
+    {
+      path: '/search/albums/:term',
+      name: 'albums-view',
+      component: AlbumsView,
       beforeEnter: (to, from, next) => (searchRedirect(next)),
     },
   ],
