@@ -6,10 +6,19 @@ import Home from './views/Home.vue';
 import SpotifyOAuth from './views/SpotifyOAuth.vue';
 import TracksView from './views/search/TracksView.vue';
 import SearchView from './views/search/SearchView.vue';
+import ArtistsView from './views/search/ArtistsView.vue';
 
 Vue.use(Router);
 
 const appStore = store;
+
+const searchRedirect = (next) => {
+  if (appStore.getters.isAuthorized && appStore.getters.term) {
+    return next();
+  }
+
+  return next('/');
+};
 
 export default new Router({
   mode: 'history',
@@ -48,13 +57,13 @@ export default new Router({
       path: '/search/songs/:term',
       name: 'tracks-view',
       component: TracksView,
-      beforeEnter: (to, from, next) => {
-        if (appStore.getters.isAuthorized && appStore.getters.term) {
-          next();
-        } else {
-          next('/');
-        }
-      },
+      beforeEnter: (to, from, next) => (searchRedirect(next)),
+    },
+    {
+      path: '/search/artists/:term',
+      name: 'artists-view',
+      component: ArtistsView,
+      beforeEnter: (to, from, next) => (searchRedirect(next)),
     },
   ],
 });

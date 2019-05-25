@@ -14,7 +14,7 @@ const actions = {
     const term = payload || context.state.term;
     const { filters } = context.state;
 
-    const query = `q=${encodeURIComponent(term)}&type=${encodeURIComponent(filters.join(','))}&market=from_token&limit=50`;
+    const query = `q=${encodeURIComponent(term)}&type=${encodeURIComponent(filters.join(','))}&market=from_token&limit=10`;
     try {
       const { data } = await Spotify.get(`/search?${query}`);
       context.commit('TERM_UPDATED', term);
@@ -57,13 +57,15 @@ const mutations = {
   },
 
   GET_MORE_TRACKS: (state, payload) => {
-    const oldItems = state.results.tracks.items;
+    const previousTracks = state.results.tracks.items;
     state.results.tracks = payload;
-    state.results.tracks.items = [...new Set([...oldItems, ...state.results.tracks.items])];
+    state.results.tracks.items = [...new Set([...previousTracks, ...state.results.tracks.items])];
   },
 
-  GET_MORE_ALBUMS: (state, payload) => {
-    state.results.albums = payload;
+  GET_MORE_ARTISTS: (state, payload) => {
+    const previousArtists = state.results.artists.items;
+    state.results.artists = payload;
+    state.results.artists.items = [...new Set([...previousArtists, ...state.results.artists.items])];
   },
 
   ADD_SEARCH_HISTORY_ENTRY: (state, payload) => {
