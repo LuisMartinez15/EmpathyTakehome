@@ -1,24 +1,33 @@
 // eslint-disable-next-line
 import Spotify from '@/api';
-import { getQueryString, getUrlParameter, updateCollection } from '@/utils';
+import {
+  getQueryString,
+  getUrlParameter,
+  updateCollection,
+  getYearRange,
+} from '@/utils';
 
 const defaultState = {
   term: '',
-  filters: ['track'],
+  filters: { types: ['artist'], year: { from: null, to: null }, hipster: false },
   results: {},
   searchHistory: [],
+  autoSearch: true,
 };
 
 const actions = {
   search: async (context, payload) => {
     const term = payload || context.state.term;
     const { filters } = context.state;
+    const { year, types, hipster } = filters;
+    const yearRange = getYearRange(year);
+    const tagHipster = `${hipster ? ' tag:hipster' : ''}`;
 
-    const query = `q=${encodeURIComponent(term)}&type=${encodeURIComponent(filters.join(','))}&market=from_token&limit=20`;
+    const query = `q=${encodeURIComponent(`${term}${yearRange}${tagHipster}`)}&type=${encodeURIComponent(types.join(','))}&market=from_token&limit=20`;
     try {
       const { data } = await Spotify.get(`/search?${query}`);
       context.commit('TERM_UPDATED', term);
-      context.commit('ADD_SEARCH_HISTORY_ENTRY', { term, filters });
+      context.commit('ADD_SEARCH_HISTORY_ENTRY', { term, filters: { hipster: filters.hipster, types: filters.types, year: { ...year } } });
       context.commit('RESULTS_FETCHED', data);
     } catch (error) {
       context.commit('RESULTS_FAILED');
@@ -45,7 +54,23 @@ const mutations = {
   },
 
   FILTERS_UPDATED: (state, payload) => {
-    state.filters = [...payload];
+    state.filters = payload;
+  },
+
+  FILTER_TYPES_UPDATED: (state, payload) => {
+    state.filters.types = payload;
+  },
+
+  FILTER_HIPSTER_UPDATED: (state, payload) => {
+    state.filters.hipster = payload;
+  },
+
+  FILTER_YEAR_FROM_UPDATED: (state, payload) => {
+    state.filters.year.from = payload;
+  },
+
+  FILTER_YEAR_TO_UPDATED: (state, payload) => {
+    state.filters.year.to = payload;
   },
 
   RESULTS_FETCHED: (state, payload) => {
@@ -69,7 +94,7 @@ const mutations = {
   },
 
   ADD_SEARCH_HISTORY_ENTRY: (state, payload) => {
-    state.searchHistory = [payload, ...state.searchHistory];
+    state.searchHistory = [{ ...payload }, ...state.searchHistory.slice(0, 4)];
   },
 
   REMOVE_SEARCH_HISTORY_ENTRY: (state, index) => {
@@ -78,6 +103,10 @@ const mutations = {
 
   CLEAR_SEARCH_HISTORY: (state) => {
     state.searchHistory = [];
+  },
+
+  SET_AUTO_SEARCH: (state, payload) => {
+    state.autoSearch = payload;
   },
 };
 /* eslint-enable */
@@ -92,6 +121,7 @@ const getters = {
   albums: state => state.results.albums || undefined,
   artists: state => state.results.artists || undefined,
   tracks: state => state.results.tracks || undefined,
+  autoSearch: state => state.autoSearch,
 };
 
 export default {

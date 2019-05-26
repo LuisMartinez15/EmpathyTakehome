@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <form>
     <search-input :canApplyFilters.sync="state.canApplyFilters"/>
     <search-filters :canApplyFilters.sync="state.canApplyFilters"/>
-  </div>
+  </form>
 </template>
 
 <script>

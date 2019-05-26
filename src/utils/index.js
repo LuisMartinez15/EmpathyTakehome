@@ -60,3 +60,9 @@ export const getMoreItems = (component, type) => {
     component.$store.dispatch('getMoreItems', component[type].next);
   }
 };
+
+export const getYearRange = (year) => {
+  const { from, to } = year;
+
+  return from ? ` year:${from}${to ? `-${to}` : ''}` : '';
+};

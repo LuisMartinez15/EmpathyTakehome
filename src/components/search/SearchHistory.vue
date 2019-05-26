@@ -6,7 +6,12 @@
       <li v-for="(search, index) in this.searchHistory" :key="index">
         <div @click="searchAgain(index)">
           <span>{{ search.term }}</span>
-          <span>{{ search.filters.join(', ') }}</span>
+          <span>{{ search.filters.types.join(', ') }}</span>
+          <span v-if="search.filters.year.from">
+            {{ `${search.filters.year.from}
+            ${search.filters.year.to ? `- ${search.filters.year.to}` : ''}` }}
+          </span>
+          <span v-if="search.filters.hipster">HIPSTER</span>
         </div>
         <span @click="removeEntry(index)">X</span>
       </li>
