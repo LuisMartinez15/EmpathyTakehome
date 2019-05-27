@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <h2>TRACKS</h2>
-    <ul>
+  <div class="tracks-list__container">
+    <!-- <h2 class="tracks-list__headline">Songs</h2> -->
+    <ol class="tracks-list">
       <track-item v-for="track in trackItems" :key="track.id" :track="track"/>
-    </ul>
+    </ol>
   </div>
 </template>
 
@@ -35,4 +35,21 @@ export default {
 </script>
 
 <style scoped>
+.tracks-list__container {
+  padding: 30px 30px;
+}
+
+.tracks-list__headline {
+  margin-bottom: 24px;
+  font-size: 2em;
+  font-weight: 500;
+  line-height: 44px;
+  text-transform: none;
+
+  color: #424242;
+}
+
+.tracks-list {
+  list-style: none;
+}
 </style>

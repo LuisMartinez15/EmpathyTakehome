@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form class="search-panel__form">
     <search-input :canApplyFilters.sync="state.canApplyFilters"/>
     <search-filters :canApplyFilters.sync="state.canApplyFilters"/>
   </form>
@@ -26,4 +26,7 @@ export default {
 </script>
 
 <style scoped>
+.search-panel__form {
+  background-color: white;
+}
 </style>

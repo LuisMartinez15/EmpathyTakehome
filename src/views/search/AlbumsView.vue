@@ -1,7 +1,7 @@
 <template>
   <div>
     <aside-panel/>
-    <div>
+    <div class="albums-view__main">
       <search-panel/>
       <results-panel>
         <template v-slot:albums>
@@ -65,4 +65,11 @@ export default {
 </script>
 
 <style scoped>
+@media (min-width: 768px) {
+  .albums-view__main {
+    width: calc(100% - 300px);
+    margin-left: 300px;
+    padding: 0;
+  }
+}
 </style>

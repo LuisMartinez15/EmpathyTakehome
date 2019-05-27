@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="results-view__container">
     <aside-panel/>
-    <div>
+    <div class="results-view__main">
       <search-panel/>
       <results-panel>
         <template v-slot:tracks>
@@ -57,4 +57,11 @@ export default {
 </script>
 
 <style scoped>
+@media (min-width: 768px) {
+  .results-view__main {
+    width: calc(100% - 300px);
+    margin-left: 300px;
+    padding: 0;
+  }
+}
 </style>

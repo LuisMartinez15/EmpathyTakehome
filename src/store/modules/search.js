@@ -29,8 +29,10 @@ const actions = {
       context.commit('TERM_UPDATED', term);
       context.commit('ADD_SEARCH_HISTORY_ENTRY', { term, filters: { hipster: filters.hipster, types: filters.types, year: { ...year } } });
       context.commit('RESULTS_FETCHED', data);
+      return Promise.resolve();
     } catch (error) {
       context.commit('RESULTS_FAILED');
+      return Promise.reject();
     }
   },
   getMoreItems: async (context, payload) => {
@@ -41,7 +43,9 @@ const actions = {
     try {
       const { data } = await Spotify.get(`/search?${query}`);
       context.commit(mutation, data[type]);
+      return Promise.resolve();
     } catch (error) {
+      return Promise.reject();
       // context.commit(`${mutation}_FAILED`);
     }
   },

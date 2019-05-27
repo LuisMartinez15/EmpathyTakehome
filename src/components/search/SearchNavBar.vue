@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <ul>
+    <ul class="search-navbar-list">
       <router-link tag="li" :to="{ path: `/search/results/${encodeURIComponent(term)}` }">
         <a>TOP RESULTS</a>
       </router-link>
@@ -10,7 +10,7 @@
         :key="section.filterName"
         :to="{ path: `/search/${section.prettyName}/${encodeURIComponent(term)}` }"
       >
-        <a>{{ section.prettyName.toUpperCase() }}</a>
+        <a class="search-nabar-link">{{ section.prettyName.toUpperCase() }}</a>
       </router-link>
     </ul>
   </nav>
@@ -41,5 +41,25 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.search-navbar-list {
+  text-align: center;
+  padding: 20px 30px 0;
+}
+
+.search-navbar-list > li {
+  display: inline-block;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.search-navbar-list > li > a {
+  color: #424242;
+  text-decoration: none;
+}
+
+.router-link-active > a {
+  padding-bottom: 4px;
+  border-bottom: 2px dashed #424242;
+}
 </style>
