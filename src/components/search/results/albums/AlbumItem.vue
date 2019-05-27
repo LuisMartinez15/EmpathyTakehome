@@ -2,7 +2,7 @@
   <li class="album-item">
     <div class="album-item__container">
       <div class="album-item__media-container">
-        <a class="album-item__link" :href="album.external_urls.spotify">
+        <a class="album-item__link" :href="album.external_urls.spotify" target="_blank">
           <img v-if="image" class="album-item__image" :src="image" :alt="album.name">
           <div v-else class="album-item__image--empty"></div>
           <span class="album-item__name" :title="album.name">{{ album.name }}</span>

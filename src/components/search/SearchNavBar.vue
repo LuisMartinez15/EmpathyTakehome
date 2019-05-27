@@ -50,15 +50,17 @@ export default {
 .search-navbar-list > li {
   display: inline-block;
   padding: 20px;
-  cursor: pointer;
 }
 
 .search-navbar-list > li > a {
+  opacity: 0.8;
   color: #424242;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .router-link-active > a {
+  opacity: 1;
   padding-bottom: 4px;
   border-bottom: 2px dashed #424242;
 }

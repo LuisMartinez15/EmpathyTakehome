@@ -2,7 +2,7 @@
   <li class="artist-item">
     <div class="artist-item__container">
       <div class="artist-item__media-container">
-        <a class="artist-item__link" :href="artist.external_urls.spotify">
+        <a class="artist-item__link" :href="artist.external_urls.spotify" target="_blank">
           <img v-if="image" class="artist-item__image" :src="image" :alt="artist.name">
           <div v-else class="artist-item__image--empty"></div>
         </a>

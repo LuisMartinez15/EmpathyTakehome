@@ -31,7 +31,7 @@ export default {
 .app-logo-name {
   display: inline-block;
   font-size: 2em;
-  color: black;
+  color: #212121;
   text-align: left;
 }
 
