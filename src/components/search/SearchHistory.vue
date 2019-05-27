@@ -14,7 +14,11 @@
       class="search-history__list"
       name="slide"
     >
-      <li class="search-history__entry" v-for="(search, index) in this.searchHistory" :key="search">
+      <li
+        class="search-history__entry"
+        v-for="(search, index) in this.searchHistory"
+        :key="parseInt(new Date().getTime() + index, 10)"
+      >
         <div class="search-history__entry-container" @click="searchAgain(index)">
           <span class="search-history__term ellipsis-one-line">{{ search.term }}</span>
           <div class="search-history__filters-container">
