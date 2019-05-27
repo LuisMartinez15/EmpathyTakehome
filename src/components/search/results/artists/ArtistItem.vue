@@ -99,7 +99,7 @@ export default {
 
 .artist-item__name {
   display: inline-block;
-  padding: 10px 0;
-  font-size: 1.25em;
+  padding: 15px 0;
+  font-size: 1em;
 }
 </style>
