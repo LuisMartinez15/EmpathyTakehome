@@ -8,8 +8,13 @@
       v-if="searchHistory && searchHistory.length > 1"
       @click="clearHistory()"
     >Clear all</span>
-    <ul class="search-history__list" v-if="searchHistory && searchHistory.length > 0">
-      <li class="search-history__entry" v-for="(search, index) in this.searchHistory" :key="index">
+    <transition-group
+      v-if="searchHistory && searchHistory.length > 0"
+      tag="ul"
+      class="search-history__list"
+      name="slide"
+    >
+      <li class="search-history__entry" v-for="(search, index) in this.searchHistory" :key="search">
         <div class="search-history__entry-container" @click="searchAgain(index)">
           <span class="search-history__term ellipsis-one-line">{{ search.term }}</span>
           <div class="search-history__filters-container">
@@ -26,7 +31,7 @@
         <!-- eslint-disable-next-line -->
         <span role="button" class="search-history__remove-entry" @click="removeEntry(index)">x</span>
       </li>
-    </ul>
+    </transition-group>
   </section>
 </template>
 
@@ -100,6 +105,7 @@ export default {
   padding: 15px 0 0;
   list-style: none;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .search-history__entry {
@@ -152,5 +158,19 @@ export default {
 .search-history__remove-entry:hover,
 .search-history__remove-entry:focus {
   cursor: pointer;
+}
+
+/* TRANSITIONS */
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.5s;
+}
+
+.slide-enter {
+  transform: translateY(-80%);
+}
+
+.slide-leave-to {
+  transform: translateY(80%);
 }
 </style>
