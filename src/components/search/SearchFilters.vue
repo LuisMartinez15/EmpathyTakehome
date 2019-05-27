@@ -254,7 +254,7 @@ export default {
   border: none;
   border-bottom: 1px solid #424242;
   color: #424242;
-  font-size: 1.125em;
+  font-size: 0.725em;
 }
 
 .search-filters__year:disabled {
@@ -300,6 +300,10 @@ export default {
 
   .search-filters__years-container {
     display: block;
+  }
+
+  .search-filters__year {
+    font-size: 1.125em;
   }
 
   .search-filters__headline {
