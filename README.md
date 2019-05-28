@@ -24,6 +24,7 @@ The search history allows the user to, with the ease of a click, search again ap
 ## Firebase hosting
 
 The app is deployed in firebase:
+
 https://spotitracker.firebaseapp.com/search
 
 
