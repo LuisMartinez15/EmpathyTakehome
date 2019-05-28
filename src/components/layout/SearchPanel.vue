@@ -1,5 +1,5 @@
 <template>
-  <form class="search-panel__form">
+  <form role="search" class="search-panel__form">
     <search-input :canApplyFilters.sync="state.canApplyFilters"/>
     <search-filters :canApplyFilters.sync="state.canApplyFilters"/>
   </form>

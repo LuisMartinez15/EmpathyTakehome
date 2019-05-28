@@ -11,6 +11,7 @@
             id="track"
             value="track"
             v-model="filters.types"
+            :aria-checked="filters.types.indexOf('track') !== -1"
           >
           <label class="search-filters__label" for="track">SONGS</label>
         </div>
@@ -23,6 +24,7 @@
             id="artist"
             value="artist"
             v-model="filters.types"
+            :aria-checked="filters.types.indexOf('artist') !== -1"
           >
           <label class="search-filters__label" for="artist">ARTISTS</label>
         </div>
@@ -39,6 +41,7 @@
             v-model="filters.types"
             value="album"
             @click="preventEmptyFilters"
+            :aria-checked="filters.types.indexOf('album') !== -1"
           >
           <label class="search-filters__label" for="album">ALBUMS</label>
         </div>
@@ -53,16 +56,21 @@
             type="number"
             placeholder="2017"
             min="1950"
+            aria-valuemin="1950"
             :max="maxValidYear"
+            :aria-valuemax="maxValidYear"
           >
           <input
             class="search-filter__filter-container search-filters__year"
             v-model="filters.year.to"
             type="number"
             placeholder="2019"
+            :aria-disabled="!filters.year.from"
             :disabled="!filters.year.from"
             :min="parseInt(filters.year.from, 10) + 1"
+            :aria-valuemin="parseInt(filters.year.from, 10) + 1"
             :max="maxValidYear"
+            :aria-valuemax="maxValidYear"
           >
         </div>
       </div>

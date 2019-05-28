@@ -1,8 +1,8 @@
 <template>
-  <nav>
-    <ul class="search-navbar-list">
+  <nav role="navigation">
+    <ul class="search-navbar-list" role="menu">
       <router-link tag="li" :to="{ path: `/search/results/${encodeURIComponent(term)}` }">
-        <a>TOP RESULTS</a>
+        <a role="menuitem">TOP RESULTS</a>
       </router-link>
       <router-link
         tag="li"
@@ -10,7 +10,7 @@
         :key="section.filterName"
         :to="{ path: `/search/${section.prettyName}/${encodeURIComponent(term)}` }"
       >
-        <a class="search-nabar-link">{{ section.prettyName.toUpperCase() }}</a>
+        <a class="search-nabar-link" role="menuitem">{{ section.prettyName.toUpperCase() }}</a>
       </router-link>
     </ul>
   </nav>

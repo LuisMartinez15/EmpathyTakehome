@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div role="main">
     <div v-if="results && !emptyResults">
       <search-nav/>
       <slot name="tracks"></slot>

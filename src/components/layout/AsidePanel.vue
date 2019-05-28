@@ -1,5 +1,5 @@
 <template>
-  <div class="aside-container">
+  <div class="aside-container" role="complementary">
     <app-logo/>
     <search-history/>
   </div>

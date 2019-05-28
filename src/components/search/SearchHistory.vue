@@ -3,8 +3,8 @@
     <h2 class="search-history__headline">Recently searched</h2>
     <span
       class="search-history__clear-all"
-      type="button"
       role="button"
+      aria-label="removeall"
       v-if="searchHistory && searchHistory.length > 1"
       @click="clearHistory()"
     >Clear all</span>
@@ -14,8 +14,12 @@
       class="search-history__list"
       name="slide"
     >
-      <li class="search-history__entry" v-for="(search, index) in this.searchHistory" :key="index">
-        <div class="search-history__entry-container" @click="searchAgain(index)">
+      <li
+        class="search-history__entry"
+        v-for="(search, index) in this.searchHistory"
+        :key="search.term + Math.random().toString(36).substr(2, 9)"
+      >
+        <div role="button" class="search-history__entry-container" @click="searchAgain(index)">
           <span class="search-history__term ellipsis-one-line">{{ search.term }}</span>
           <div class="search-history__filters-container">
             <span
@@ -29,7 +33,12 @@
           </div>
         </div>
         <!-- eslint-disable-next-line -->
-        <span role="button" class="search-history__remove-entry" @click="removeEntry(index)">x</span>
+        <span
+          role="button"
+          aria-label="remove"
+          class="search-history__remove-entry"
+          @click="removeEntry(index)"
+        >x</span>
       </li>
     </transition-group>
   </section>
