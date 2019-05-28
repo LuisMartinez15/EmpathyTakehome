@@ -78,6 +78,7 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
+  height: 100%;
   border-radius: 50%;
   object-fit: contain;
 }
@@ -89,8 +90,9 @@ export default {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: center no-repeat url("../../../../assets/icons/artist.svg")
+  background: center center no-repeat url("../../../../assets/icons/artist.svg")
     #424242;
+  background-size: 35%;
 }
 
 .artist-item__image--empty:hover {

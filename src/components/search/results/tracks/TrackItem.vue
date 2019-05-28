@@ -53,7 +53,6 @@ export default {
   display: flex;
   align-content: space-between;
   padding: 15px;
-  user-select: none;
   background-color: white;
   box-shadow: 2px 2px 4px -1px rgba(0, 0, 0, 0.3);
 }
@@ -106,7 +105,7 @@ export default {
 
 .track-item__data {
   display: inline-block;
-  max-width: 30%;
+  max-width: 100%;
 }
 
 .track-item__album {
@@ -120,7 +119,7 @@ export default {
   }
 
   .track-item__data {
-    max-width: 35%;
+    max-width: 80%;
   }
 
   .track-item__explicit-container {

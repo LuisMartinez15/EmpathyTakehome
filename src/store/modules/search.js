@@ -22,8 +22,8 @@ const actions = {
     const { year, types, hipster } = filters;
     const yearRange = getYearRange(year);
     const tagHipster = `${hipster ? ' tag:hipster' : ''}`;
-
     const query = `q=${encodeURIComponent(`${term}${yearRange}${tagHipster}`)}&type=${encodeURIComponent(types.join(','))}&market=from_token&limit=20`;
+
     try {
       const { data } = await Spotify.get(`/search?${query}`);
       context.commit('TERM_UPDATED', term);
