@@ -2,6 +2,7 @@
   <div class="search-container">
     <input
       class="search-input"
+      v-focus
       v-debounce="delay"
       v-model.lazy="term"
       type="text"
@@ -51,6 +52,9 @@ export default {
   },
   directives: {
     debounce,
+    focus: {
+      inserted: element => element.focus(),
+    },
   },
 };
 </script>
