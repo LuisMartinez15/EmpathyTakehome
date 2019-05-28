@@ -35,8 +35,9 @@ export const updateCollection = (state, type, payload) => {
   return newState;
 };
 
-export const searchRedirect = (store, next) => {
+export const searchRedirect = (store, to, next) => {
   if (store.getters.isAuthorized && store.getters.term) {
+    document.title = to.meta.title;
     return next();
   }
 
