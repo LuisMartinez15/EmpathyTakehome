@@ -30,10 +30,16 @@ https://spotitracker.firebaseapp.com/search
 ## Setup
 
 Install node_modules
+```
 npm install
+```
 
 Initialize dev server
+```
 npm run serve
+```
 
 Run tests
+```
 npm run test:unit
+```
