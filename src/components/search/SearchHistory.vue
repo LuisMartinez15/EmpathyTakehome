@@ -14,11 +14,7 @@
       class="search-history__list"
       name="slide"
     >
-      <li
-        class="search-history__entry"
-        v-for="(search, index) in this.searchHistory"
-        :key="search.term + Math.random().toString(36).substr(2, 9)"
-      >
+      <li class="search-history__entry" v-for="(search, index) in this.searchHistory" :key="index">
         <div role="button" class="search-history__entry-container" @click="searchAgain(index)">
           <span class="search-history__term ellipsis-one-line">{{ search.term }}</span>
           <div class="search-history__filters-container">
@@ -171,18 +167,18 @@ export default {
 
 /* TRANSITIONS */
 .slide-enter-active {
-  transition: transform 0.5s;
+  transition: transform 0.35s;
 }
 
 .slide-leave-active {
-  transition: transform 0.5s;
+  transition: transform 0.35s;
 }
 
 .slide-enter {
-  transform: translateY(-80%);
+  transform: translateY(-150px);
 }
 
 .slide-leave-to {
-  transform: translateX(-80%);
+  transform: translateX(-300px);
 }
 </style>
