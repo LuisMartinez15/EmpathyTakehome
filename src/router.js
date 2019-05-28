@@ -4,6 +4,8 @@ import store from './store';
 
 import { searchRedirect } from './utils';
 
+import Spotify from './api';
+
 import Home from './views/Home.vue';
 import SpotifyOAuth from './views/SpotifyOAuth.vue';
 
@@ -41,9 +43,14 @@ export default new Router({
     {
       path: '/search',
       name: 'search-view',
+      meta: {
+        title: 'SpotiTracker - Search',
+      },
       component: SearchView,
       beforeEnter: (to, from, next) => {
         if (appStore.getters.isAuthorized) {
+          document.title = to.meta.title;
+          Spotify.defaults.headers.Authorization = `Bearer ${window.localStorage.getItem('accessToken')}`;
           return next();
         }
 
@@ -53,27 +60,39 @@ export default new Router({
     {
       path: '/search/results/:term',
       name: 'results-view',
+      meta: {
+        title: 'SpotiTracker - Top results',
+      },
       component: ResultsView,
-      beforeEnter: (to, from, next) => (searchRedirect(store, next)),
+      beforeEnter: (to, from, next) => (searchRedirect(store, to, next)),
     },
     {
       path: '/search/songs/:term',
       name: 'tracks-view',
+      meta: {
+        title: 'SpotiTracker - Songs',
+      },
       component: TracksView,
-      beforeEnter: (to, from, next) => (searchRedirect(store, next)),
+      beforeEnter: (to, from, next) => (searchRedirect(store, to, next)),
     },
     {
       path: '/search/artists/:term',
       name: 'artists-view',
+      meta: {
+        title: 'SpotiTracker - Artists',
+      },
       component: ArtistsView,
-      beforeEnter: (to, from, next) => (searchRedirect(store, next)),
+      beforeEnter: (to, from, next) => (searchRedirect(store, to, next)),
     },
 
     {
       path: '/search/albums/:term',
       name: 'albums-view',
+      meta: {
+        title: 'SpotiTracker - Albums',
+      },
       component: AlbumsView,
-      beforeEnter: (to, from, next) => (searchRedirect(store, next)),
+      beforeEnter: (to, from, next) => (searchRedirect(store, to, next)),
     },
   ],
 });
