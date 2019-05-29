@@ -18,7 +18,7 @@ Vuex, Axios
 
 Testing frameworks
 ```
-Jest, Cypress
+Jest
 ```
 
 
