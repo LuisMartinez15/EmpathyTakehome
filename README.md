@@ -24,11 +24,19 @@ Jest, Cypress
 
 ## Views
 
-### Top Results
+### /
+
+Connect to your Spotify account granting access to SpotiTracker
+
+### /search
+
+Initial search view
+
+### /search/results
 
 Summary of the most popoular items for every filter type chosen (ex: songs, albums and/or artists).
 
-### Songs | Artists | Albums
+### /search/songs/:searchTerm | /search/artists/:searchTerm | search/albums/:searchTerm
 
 Each view lists its own type and displays more items as the user scrolls down throughout the page.
 
