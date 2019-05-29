@@ -4,6 +4,23 @@ SpotiTracker is a Spotify's search feature replica with some additional filters/
 
 Users can search songs, albums and/or artists in a concrete year or between a year range. Hipsters can filter these results obtaining only those with at most 10 popularity (out of 100).
 
+## Tools
+
+Frontend framework
+```
+Vue
+```
+
+Libraries
+```
+Vuex, Axios
+```
+
+Testing frameworks
+```
+Jest, Cypress
+```
+
 
 ## Views
 
